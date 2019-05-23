@@ -1,4 +1,3 @@
-
 function main() {
   const sheet = SpreadsheetApp.getActiveSheet();
   // メンバーリスト
