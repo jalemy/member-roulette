@@ -123,6 +123,22 @@ function lottery(members, memberCount) {
 */
 
 /**
+ * 当番上限回数に至っているメンバーをmemberArrayから削除する関数
+ *
+ * @param {Object} memberObjects
+ * @param {Array.<string>} memberArray
+ * @param {number} dutyLimit
+ */
+function removeMember(memberObjects, memberArray, dutyLimit) {
+  for (let i = 0; i < memberArray.length; i++) {
+    if (memberObjects[memberArray[i]] >= dutyLimit) {
+      memberArray.splice(i, 1);
+      i--;
+    }
+  }
+}
+
+/**
  * 渡した配列からcount回数抽選して返す関数
  * 抽選内容の重複は無し
  *
