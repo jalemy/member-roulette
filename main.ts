@@ -21,8 +21,7 @@ function main() {
   const result = lotteries(memberArray, 5);
   sheet.getRange('E:E').clearContent();
   sheet.getRange(1, 5).setValue('月曜日');
-  sheet.getRange(2, 5, result.length, 1).setValues(result);
-
+  sheet.getRange(2, 5, result.length, 1).setValues(convertToArray2d(result));
 
   Logger.log(memberObjects);
 
