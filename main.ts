@@ -1,8 +1,32 @@
 
 function main() {
-  var sheet = SpreadsheetApp.getActiveSheet();
+  const sheet = SpreadsheetApp.getActiveSheet();
+  // メンバーリスト
+  const memberArray = sheet.getRange('A:A').getValues().filter(String).map(member => member[0]);
+  // 1日あたりの当番人数
+  const dutyCount = sheet.getRange(2, 2).getValue();
 
-  var data = sheet.getRange('A:A').getValues().filter(String);
+  // { 'メンバーの名前', 当番回数 }
+  let memberObjects = {};
+  for (let member of memberArray) {
+    memberObjects[member] = 0;
+  }
+
+  // 当番人数に対して、メンバーが足りない場合エラー
+  if (dutyCount > memberArray.length) {
+    Browser.msgBox('人数が足りません');
+    return;
+  }
+
+  const result = lotteries(memberArray, 5);
+  sheet.getRange('E:E').clearContent();
+  sheet.getRange(1, 5).setValue('月曜日');
+  sheet.getRange(2, 5, result.length, 1).setValues(result);
+
+
+  Logger.log(memberObjects);
+
+  /*
   var array = [];
   for (var i = 0; i < data.length; i++) {
     for (var j = 0; j < data[i].length; j++) {
@@ -46,8 +70,10 @@ function main() {
   sheet.getRange('I:I').clearContent();
   sheet.getRange(1, 9).setValue('金曜日');
   sheet.getRange(2, 9, result.length, 1).setValues(result);
+  */
 }
 
+/*
 function lottery(members, memberCount) {
   var result = [];
   var limit = Math.round(memberCount * 5 / Object.keys(members).length);
@@ -80,7 +106,7 @@ function lottery(members, memberCount) {
 
   return result;
 }
-
+*/
 
 /**
  * 渡した配列からcount回数抽選して返す関数
@@ -139,4 +165,18 @@ function arrayExists(values, target) {
   }
 
   return false;
+}
+
+/**
+ * 1次元配列を2次元配列にして返す関数
+ *
+ * @param {Array.<*>} array
+ * @returns {Array.<*>[]}
+ */
+function convertToArray2d(array) {
+  const array2d = [];
+  for (const value of array) {
+    array2d.push([value]);
+  }
+  return array2d;
 }
