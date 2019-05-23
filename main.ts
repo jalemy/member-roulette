@@ -44,40 +44,44 @@ function main() {
   sheet.getRange('H:H').clearContent();
   sheet.getRange('I:I').clearContent();
 
-  // 月曜日
-  let result = lotteries(memberArray, dutyCount);
-  sheet.getRange(1, 5).setValue('月曜日');
-  sheet.getRange(2, 5, result.length, 1).setValues(convertToArray2d(result));
-  memberObjects.countDuty(result);
-  removeMember(memberObjects, memberArray, dutyLimit);
+  try {
+    // 月曜日
+    let result = lotteries(memberArray, dutyCount);
+    sheet.getRange(1, 5).setValue('月曜日');
+    sheet.getRange(2, 5, result.length, 1).setValues(convertToArray2d(result));
+    memberObjects.countDuty(result);
+    removeMember(memberObjects, memberArray, dutyLimit);
 
-  // 火曜日
-  result = lotteries(memberArray, dutyCount);
-  sheet.getRange(1, 6).setValue('火曜日');
-  sheet.getRange(2, 6, result.length, 1).setValues(convertToArray2d(result));
-  memberObjects.countDuty(result);
-  removeMember(memberObjects, memberArray, dutyLimit);
+    // 火曜日
+    result = lotteries(memberArray, dutyCount);
+    sheet.getRange(1, 6).setValue('火曜日');
+    sheet.getRange(2, 6, result.length, 1).setValues(convertToArray2d(result));
+    memberObjects.countDuty(result);
+    removeMember(memberObjects, memberArray, dutyLimit);
 
-  // 水曜日
-  result = lotteries(memberArray, dutyCount);
-  sheet.getRange(1, 7).setValue('水曜日');
-  sheet.getRange(2, 7, result.length, 1).setValues(convertToArray2d(result));
-  memberObjects.countDuty(result);
-  removeMember(memberObjects, memberArray, dutyLimit);
+    // 水曜日
+    result = lotteries(memberArray, dutyCount);
+    sheet.getRange(1, 7).setValue('水曜日');
+    sheet.getRange(2, 7, result.length, 1).setValues(convertToArray2d(result));
+    memberObjects.countDuty(result);
+    removeMember(memberObjects, memberArray, dutyLimit);
 
-  // 木曜日
-  result = lotteries(memberArray, dutyCount);
-  sheet.getRange(1, 8).setValue('木曜日');
-  sheet.getRange(2, 8, result.length, 1).setValues(convertToArray2d(result));
-  memberObjects.countDuty(result);
-  removeMember(memberObjects, memberArray, dutyLimit);
+    // 木曜日
+    result = lotteries(memberArray, dutyCount);
+    sheet.getRange(1, 8).setValue('木曜日');
+    sheet.getRange(2, 8, result.length, 1).setValues(convertToArray2d(result));
+    memberObjects.countDuty(result);
+    removeMember(memberObjects, memberArray, dutyLimit);
 
-  // 金曜日
-  result = lotteries(memberArray, dutyCount);
-  sheet.getRange(1, 9).setValue('金曜日');
-  sheet.getRange(2, 9, result.length, 1).setValues(convertToArray2d(result));
-  memberObjects.countDuty(result);
-  removeMember(memberObjects, memberArray, dutyLimit);
+    // 金曜日
+    result = lotteries(memberArray, dutyCount);
+    sheet.getRange(1, 9).setValue('金曜日');
+    sheet.getRange(2, 9, result.length, 1).setValues(convertToArray2d(result));
+    memberObjects.countDuty(result);
+    removeMember(memberObjects, memberArray, dutyLimit);
+  } catch (e) {
+    main();
+  }
 }
 
 /**
