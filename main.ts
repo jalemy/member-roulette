@@ -127,7 +127,7 @@ function lotteries(values, count) {
     const lot = lottery(targets);
 
     for (let j = 0; j < targets.length; j++) {
-      if (arrayExists(targets, targets[j])) {
+      if (arrayExists(result, targets[j])) {
         targets.splice(j, 1);
       }
     }
