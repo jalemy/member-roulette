@@ -9,7 +9,17 @@ function main() {
   const dutyLimit = sheet.getRange(2, 3).getValue();
 
   // { 'メンバーの名前', 当番回数 }
-  let memberObjects = {};
+  let memberObjects = {
+    // TODO: コメントあとで書く
+    countDuty: function (lotteryResult) {
+      for (const lot of lotteryResult) {
+        if (arrayExists(Object.keys(this), lot)) {
+          this[lot] += 1;
+        }
+      }
+    }
+  };
+
   for (let member of memberArray) {
     memberObjects[member] = 0;
   }
@@ -24,6 +34,9 @@ function main() {
   sheet.getRange('E:E').clearContent();
   sheet.getRange(1, 5).setValue('月曜日');
   sheet.getRange(2, 5, result.length, 1).setValues(convertToArray2d(result));
+
+  memberObjects.countDuty(result);
+  Logger.log(memberObjects);
 
   /*
   var array = [];
