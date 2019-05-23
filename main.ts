@@ -91,7 +91,7 @@ function main() {
 /**
  * 当番上限回数に至っているメンバーをmemberArrayから削除する関数
  *
- * @param {Object} memberObjects
+ * @param {Object.<string, number>} memberObjects
  * @param {Array.<string>} memberArray
  * @param {number} dutyLimit
  */
