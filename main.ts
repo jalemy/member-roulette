@@ -7,6 +7,8 @@ function main() {
   const dutyCount = sheet.getRange(2, 2).getValue();
   // 当番回数の上限
   const dutyLimit = sheet.getRange(2, 3).getValue();
+  // 月曜日から金曜日まで5日間
+  const dayCount = 5;
 
   // { 'メンバーの名前', 当番回数 }
   let memberObjects = {
