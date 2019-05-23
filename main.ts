@@ -5,6 +5,8 @@ function main() {
   const memberArray = sheet.getRange('A:A').getValues().filter(String).map(member => member[0]);
   // 1日あたりの当番人数
   const dutyCount = sheet.getRange(2, 2).getValue();
+  // 当番回数の上限
+  const dutyLimit = sheet.getRange(2, 3).getValue();
 
   // { 'メンバーの名前', 当番回数 }
   let memberObjects = {};
@@ -18,12 +20,10 @@ function main() {
     return;
   }
 
-  const result = lotteries(memberArray, 5);
+  const result = lotteries(memberArray, dutyCount);
   sheet.getRange('E:E').clearContent();
   sheet.getRange(1, 5).setValue('月曜日');
   sheet.getRange(2, 5, result.length, 1).setValues(convertToArray2d(result));
-
-  Logger.log(memberObjects);
 
   /*
   var array = [];
@@ -120,15 +120,15 @@ function lotteries(values, count) {
     throw new Error("抽選回数に対して、データが足りません");
   }
 
-  const targets = values.slice(0, values.length);
+  const lotteryBox = values.slice(0, values.length);
   const result = [];
 
   for (let i = 0; i < count; i++) {
-    const lot = lottery(targets);
+    const lot = lottery(lotteryBox);
 
-    for (let j = 0; j < targets.length; j++) {
-      if (arrayExists(result, targets[j])) {
-        targets.splice(j, 1);
+    for (let j = 0; j < lotteryBox.length; j++) {
+      if (lot == lotteryBox[j]) {
+        lotteryBox.splice(j, 1);
       }
     }
 
