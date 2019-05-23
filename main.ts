@@ -28,99 +28,55 @@ function main() {
 
   // 当番人数に対して、メンバーが足りない場合エラー
   if (dutyCount > memberArray.length) {
-    Browser.msgBox('人数が足りません');
+    Browser.msgBox('人数が足りません。');
     return;
   }
 
-  const result = lotteries(memberArray, dutyCount);
+  if (memberArray.length * dutyLimit < dayCount * dutyCount) {
+    Browser.msgBox('当番回数上限が少なすぎます。');
+    return;
+  }
+
+  // 月曜日
+  let result = lotteries(memberArray, dutyCount);
   sheet.getRange('E:E').clearContent();
   sheet.getRange(1, 5).setValue('月曜日');
   sheet.getRange(2, 5, result.length, 1).setValues(convertToArray2d(result));
-
   memberObjects.countDuty(result);
-  Logger.log(memberObjects);
+  removeMember(memberObjects, memberArray, dutyLimit);
 
-  /*
-  var array = [];
-  for (var i = 0; i < data.length; i++) {
-    for (var j = 0; j < data[i].length; j++) {
-      array.push(data[i][j]);
-    }
-  }
-
-  var members = {};
-  for (var i in array) {
-    members[array[i]] = 0;
-  }
-
-  var memberCount = sheet.getRange(1, 2).getValue();
-
-  if (memberCount > Object.keys(members).length) {
-    Browser.msgBox('人数が足りません');
-    return;
-  }
-
-  var result = lottery(members, memberCount);
-  sheet.getRange('E:E').clearContent();
-  sheet.getRange(1, 5).setValue('月曜日');
-  sheet.getRange(2, 5, result.length, 1).setValues(result);
-
-  result = lottery(members, memberCount);
+  // 火曜日
+  result = lotteries(memberArray, dutyCount);
   sheet.getRange('F:F').clearContent();
   sheet.getRange(1, 6).setValue('火曜日');
-  sheet.getRange(2, 6, result.length, 1).setValues(result);
+  sheet.getRange(2, 6, result.length, 1).setValues(convertToArray2d(result));
+  memberObjects.countDuty(result);
+  removeMember(memberObjects, memberArray, dutyLimit);
 
-  result = lottery(members, memberCount);
+  // 水曜日
+  result = lotteries(memberArray, dutyCount);
   sheet.getRange('G:G').clearContent();
   sheet.getRange(1, 7).setValue('水曜日');
-  sheet.getRange(2, 7, result.length, 1).setValues(result);
+  sheet.getRange(2, 7, result.length, 1).setValues(convertToArray2d(result));
+  memberObjects.countDuty(result);
+  removeMember(memberObjects, memberArray, dutyLimit);
 
-  result = lottery(members, memberCount);
+  // 木曜日
+  result = lotteries(memberArray, dutyCount);
   sheet.getRange('H:H').clearContent();
   sheet.getRange(1, 8).setValue('木曜日');
-  sheet.getRange(2, 8, result.length, 1).setValues(result);
+  sheet.getRange(2, 8, result.length, 1).setValues(convertToArray2d(result));
+  memberObjects.countDuty(result);
+  removeMember(memberObjects, memberArray, dutyLimit);
 
-  result = lottery(members, memberCount);
+  // 金曜日
+  result = lotteries(memberArray, dutyCount);
   sheet.getRange('I:I').clearContent();
   sheet.getRange(1, 9).setValue('金曜日');
-  sheet.getRange(2, 9, result.length, 1).setValues(result);
-  */
+  sheet.getRange(2, 9, result.length, 1).setValues(convertToArray2d(result));
+  memberObjects.countDuty(result);
+  removeMember(memberObjects, memberArray, dutyLimit);
 }
-
-/*
-function lottery(members, memberCount) {
-  var result = [];
-  var limit = Math.round(memberCount * 5 / Object.keys(members).length);
-
-  while (result.length < memberCount) {
-    // 規定数未満登場しているメンバーのリスト
-    var values = [];
-    for (var i in Object.keys(members)) {
-      if (members[Object.keys(members)[i]] < limit) {
-        values.push(Object.keys(members)[i]);
-      }
-    }
-
-    // 抽選結果と重複しているメンバーを、抽選元から除外
-    for (var i = 0; i < values.length; i++) {
-      if (arrayExists(result, values[i])) {
-        values.splice(i, 1);
-      }
-    }
-
-    // 抽選
-    var value = values[Math.floor(Math.random() * values.length)];
-
-    Logger.log("members: " + members);
-    Logger.log(value);
-
-    members[value]++;
-    result.push([value]);
-  }
-
-  return result;
-}
-*/
 
 /**
  * 当番上限回数に至っているメンバーをmemberArrayから削除する関数
