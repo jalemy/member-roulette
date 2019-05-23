@@ -12,7 +12,11 @@ function main() {
 
   // { 'メンバーの名前', 当番回数 }
   let memberObjects = {
-    // TODO: コメントあとで書く
+    /**
+     * 当番回数を計算して、反映させる関数
+     *
+     * @param {Array.<string>} lotteryResult
+     */
     countDuty: function (lotteryResult) {
       for (const lot of lotteryResult) {
         if (arrayExists(Object.keys(this), lot)) {
